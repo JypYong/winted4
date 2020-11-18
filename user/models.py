@@ -12,6 +12,7 @@ class User(models.Model):
     apllied_status  = models.ManyToManyField('company.Company', through='AppliedStatus', related_name='applied_status')
     recomenders     = models.ManyToManyField ('self' , symmetrical=False ,through= 'Recommendation', related_name='recomenders')
     resumes         = models.ForeignKey('Resume' , on_delete=models.CASCADE , related_name='resumes')
+    
 
     class Meta:
         db_table = 'users'  
@@ -33,6 +34,13 @@ class User_tag_filter(models.Model):
 class User_district_filter(models.Model):
      user     = models.ForeignKey('User' , on_delete=models.CASCADE)
      district = models.ForeignKey('company.District' , on_delete=models.CASCADE)
+
+     class Meta:
+         db_table='user_district_filters'
+
+class User_carrer_filter(models.Model):
+     user     = models.ForeignKey('User' , on_delete=models.CASCADE)
+     carrer = models.ForeignKey('company.Carrer' , on_delete=models.CASCADE)
 
      class Meta:
          db_table='user_district_filters'
@@ -85,3 +93,10 @@ class Award(models.Model):
 
     class Meta:
         db_table='awards'
+
+class Grade(models.Model):
+    year        = models.CharField(max_length=45)
+    school_name = models.CharField(max_length=45)
+
+    class Meta:
+        db_table='grades'

@@ -69,7 +69,7 @@ class Tag(models.Model):
 
 class Salary(models.Model):
     subcategories = models.ForeignKey('Subcategory', on_delete=models.CASCADE)
-    # carrer        = models.ForeignKey('Carrer' , on_delete=models.CASCADE)
+    carrer        = models.ForeignKey('Carrer' , on_delete=models.CASCADE , null=True)
     maincategories= models.ForeignKey('Maincategory', on_delete=models.CASCADE)
     salary        = models.DecimalField(max_digits=10, decimal_places=2,null=True,default='')
 

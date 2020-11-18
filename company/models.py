@@ -2,15 +2,15 @@ from django.db import models
 
 class Company(models.Model):
     name             = models.CharField(max_length=45)
-    subcategories    = models.ForeignKey('Subcategory',on_delete=models.CASCADE)
-    money            = models.ForeignKey('Money',on_delete=models.CASCADE)
-    district         = models.ForeignKey('District' , on_delete=models.CASCADE)
+    subcategories    = models.ForeignKey('Subcategory',on_delete=models.CASCADE,null=True)
+    money            = models.ForeignKey('Money',on_delete=models.CASCADE,null=True)
+    district         = models.ForeignKey('District' , on_delete=models.CASCADE,null=True)
     title            = models.CharField (max_length=45)
     dead_line        = models.CharField (max_length=45)
-    carrer           = models.ForeignKey ('Carrer',on_delete=models.CASCADE)
+    carrer           = models.ForeignKey ('Carrer',on_delete=models.CASCADE,null=True)
     image_url        = models.CharField (max_length=1000)
-    sub_tag          = models.ForeignKey('Sub_tag',on_delete=models.CASCADE)
-    tag_companies   =  models.ManyToManyField('Sub_tag' , through='Tag_company')
+    sub_tag          = models.ForeignKey('Sub_tag',on_delete=models.CASCADE , related_name='sub_tags',null=True)
+    tag_companies   =  models.ManyToManyField('Sub_tag' , through='Tag_company',related_name='tag_companies')
 
     class Meta:
         db_table = 'companies'  
@@ -29,15 +29,15 @@ class Maincategory(models.Model):
         db_table='maincategories'
 
 class Money(models.Model):
-    recommend = models.DecimalField(10,2)
-    applicant = models.DecimalField(10,2)
+    recommend = models.DecimalField(max_digits=10, decimal_places=2,null=True,default='')
+    applicant = models.DecimalField(max_digits=10, decimal_places=2,null=True,default='')
 
     class Meta:
         db_table='moneys'
 
 class District(models.Model):
     name                = models.CharField(max_length=45)
-    district_categories = models.ForeignKey('District_category' , on_delete=models.CASCADE)
+    district_categories = models.ForeignKey('District_category' , on_delete=models.CASCADE,null=True)
 
     class Meta:
         db_table='districts' 
@@ -69,9 +69,9 @@ class Tag(models.Model):
 
 class Salary(models.Model):
     subcategories = models.ForeignKey('Subcategory', on_delete=models.CASCADE)
-    carrer        = models.ForeignKey('Carrer' , on_delete=models.CASCADE)
+    # carrer        = models.ForeignKey('Carrer' , on_delete=models.CASCADE)
     maincategories= models.ForeignKey('Maincategory', on_delete=models.CASCADE)
-    salary        = models.DecimalField(10,2)
+    salary        = models.DecimalField(max_digits=10, decimal_places=2,null=True,default='')
 
     class Meta:
         db_table='salaries'

@@ -7,10 +7,10 @@ class User(models.Model):
     phone           = models.CharField(max_length=45)
     likes           = models.ManyToManyField('company.Company', through='Like', related_name='likes')
     tag_filter      = models.ManyToManyField('company.Tag' , through='User_tag_filter' , related_name='user_tags_filters')
-    district_filter = models.ManyToManyField('company.Distict' , through= 'User_district_filter' , related_name= 'user_districts_filters')
-    career_filter   = models.ManyToManyField('company.Career', through='user_career_filters' , related_name= 'user_careers_filters')
+    district_filter = models.ManyToManyField('company.District' , through= 'User_district_filter' , related_name= 'user_districts_filters')
+    carrer_filter   = models.ManyToManyField('company.Carrer', through='User_carrer_filter' , related_name= 'user_careers_filters')
     apllied_status  = models.ManyToManyField('company.Company', through='AppliedStatus', related_name='applied_status')
-    recomenders     = models.ManyToManyField ('self' , symmetrical=False ,through= 'Recommendation', related_name='recomenders')
+    recomender     = models.ManyToManyField ('self' , symmetrical=False ,through= 'Recommendation', related_name='recomenders')
     resumes         = models.ForeignKey('Resume' , on_delete=models.CASCADE , related_name='resumes')
     
 
@@ -43,7 +43,7 @@ class User_carrer_filter(models.Model):
      carrer = models.ForeignKey('company.Carrer' , on_delete=models.CASCADE)
 
      class Meta:
-         db_table='user_district_filters'
+         db_table='user_carrer_filters'
 
 class AppliedStatus(models.Model):
     user     = models.ForeignKey('User' , on_delete=models.CASCADE)
@@ -73,7 +73,7 @@ class Resume(models.Model):
 class Past_carrer(models.Model):
     year       = models.CharField(max_length=45)
     company    = models.CharField(max_length=45)
-    achevement = models.ForeignKey('Achievements' , on_delete=models.CASCADE)
+    achevement = models.ForeignKey('Achievement' , on_delete=models.CASCADE)
 
     class Meta:
         db_table='past_carrers'
